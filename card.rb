@@ -7,7 +7,7 @@ class Card
   end
 
   def output_card
-    puts "The #{self.rank} of #{self.suit}"
+    puts "The #{self.rank} of #{self.suit} is the top card of the deck"
   end
 
   def self.random_card
@@ -28,7 +28,7 @@ class Deck
         @cards << Card.new(rank, suit)
       end
     end   
-    
+
   end
 
   def out_put
@@ -42,8 +42,8 @@ class Deck
   end
 
   def deal
-    top = @cards.shift
-    puts "#{top.output_card} is the top card of the deck."
+    @cards.shift
+    #puts "#{top.output_card} is the top card of the deck."
   end
 
 end
@@ -51,4 +51,4 @@ end
 deck = Deck.new
 deck.shuffle
 #deck.out_put
-deck.deal
+deck.deal.output_card
