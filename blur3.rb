@@ -9,108 +9,117 @@ class Image
 
   def blur(distance)
     count = distance
-    oneset = []
-    twoset = []
+    coords = []
 
-   img.each_index do |x|
-     subarray = img[x]
-      subarray.each_index do |y|
-       if img[x][y] == 1
-         # puts img[x][y]
-         oneset << x
-         twoset << y
-       end
+    while count > 0 do
+
+      img.each_index do |y|
+        row = img[y]
+        row.each_index do |x|
+          coords << [y, x] if img[y][x] == 1
+        end
       end
+
+      coords.each do |c|
+        y = c[0]
+        x = c[1]
+        img[y][x-1] = 1 if x >= 0
+        img[y][x+1] = 1 if x < img[0].length - 1
+        img[y-1][x] = 1 if y >= 0
+        img[y+1][x] = 1 if y < img.length - 1
+      end
+
+      count = count - 1
+
     end
 
-   while count > 0 do
-     num = 0
-     oneset.each_index do |i|
-       puts count
-     # puts img[oneset[i]].length
-     # puts twoset[i]
-      if (oneset[i]-count) >= 0 && oneset[i] != 0
-       img[oneset[i]-count][twoset[i]] = 1
-      end
-      if (twoset[i]-count) >= 0 && twoset[i] != 0
-       img[oneset[i]][twoset[i]-count] = 1
-      end
-      # if oneset[i] < (img.length - 1) && (oneset[i] + count) >= (img.length - 1)
-      #   while count >= num
-      #     img[oneset[i]+num][twoset[i]] = 1
-      #     num = num + 1
-      #   end
-      # end
-      # if twoset[i] < (img[oneset[i]].length - 1) && (twoset[i] + count) >= (img[oneset[i]].length - 1)
-      #   while count >= num
-      #     img[oneset[i]][twoset[i]+num] = 1
-      #     num = num + 1
-      #   end
-      # end
-     count = count - 1
-
-
-    end
-   end
+    # while count > 0 do
+    # num = 0
+    # coords.each_index do |i|
+    # puts count
+    # # puts img[coords[i]].length
+    # # puts twoset[i]
+    # if (coords[i]-count) >= 0 && coords[i] != 0
+    # img[coords[i]-count][twoset[i]] = 1
+    # end
+    # if (twoset[i]-count) >= 0 && twoset[i] != 0
+    # img[coords[i]][twoset[i]-count] = 1
+    # end
+    # if coords[i] < (img.length - 1) && (coords[i] + count) <= (img.length - 1)
+    # while num <= distance
+    #   #img[coords[i]+num][twoset[i]] = 1
+    #   num = num + 1
+    # end
+    # end
+    #
+    # count = count - 1
+    # end
+    # end
 
    img.each_index do |f|
      puts "#{img[f].join}"
-     # puts "#{oneset}"
+     # puts "#{coords}"
      # puts "#{twoset}"
    end
   end
 
-  def output_image
-     oneset = []
-     twoset = []
+  # def output_image
+  #    coords = []
+  #    twoset = []
+  #
+  #   img.each_index do |x|
+  #     subarray = img[x]
+  #     subarray.each_index do |y|
+  #       if img[x][y] == 1
+  #         # puts img[x][y]
+  #         coords << x
+  #         twoset << y
+  #       end
+  #     end
+  #   end
+  #
+  #   coords.each_index do |i|
+  #     # puts img[coords[i]].length
+  #     # puts twoset[i]
+  #     if coords[i] != 0
+  #       img[coords[i]-1][twoset[i]] = 1
+  #     end
+  #     if twoset[i] != 0
+  #       img[coords[i]][twoset[i]-1] = 1
+  #     end
+  #     if coords[i] < (img.length - 1)
+  #       img[coords[i]+1][twoset[i]] = 1
+  #      end
+  #      if twoset[i] < (img[coords[i]].length - 1)
+  #       img[coords[i]][twoset[i]+1] = 1
+  #     end
+  #   end
 
-    img.each_index do |x|
-      subarray = img[x]
-      subarray.each_index do |y|
-        if img[x][y] == 1
-          # puts img[x][y]
-          oneset << x
-          twoset << y
-        end
-      end
-    end
-
-    oneset.each_index do |i|
-      # puts img[oneset[i]].length
-      # puts twoset[i]
-      if oneset[i] != 0
-        img[oneset[i]-1][twoset[i]] = 1
-      end
-      if twoset[i] != 0
-        img[oneset[i]][twoset[i]-1] = 1
-      end
-      if oneset[i] < (img.length - 1)
-        img[oneset[i]+1][twoset[i]] = 1
-       end
-       if twoset[i] < (img[oneset[i]].length - 1)
-        img[oneset[i]][twoset[i]+1] = 1
-      end
-    end
-
-    img.each_index do |f|
-      puts "#{img[f].join}"
-      # puts "#{oneset}"
-      # puts "#{twoset}"
-    end
-  end
+  #   img.each_index do |f|
+  #     puts "#{img[f].join}"
+  #     # puts "#{coords}"
+  #     # puts "#{twoset}"
+  #   end
+  # end
 
 
 
 end
+# if twoset[i] < (img[coords[i]].length - 1) && (twoset[i] + count) >= (img[coords[i]].length - 1)
+#   while count >= num
+#     img[coords[i]][twoset[i]+num] = 1
+#     num = num + 1
+#   end
+# end
 
 image = Image.new([
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 1, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0]
+  [0, 0, 0, 0, 0, 0, 1],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 1, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0]
 ])
 
-image.blur(3)
+image.blur(2)
